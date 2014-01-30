@@ -1,0 +1,87 @@
+#-----------------------------------
+#--------------README---------------
+#-----------------------------------
+
+This package contains the Solazyme Total Annotation Tool for Genomic and Protein Sequences (STAT-GPS).
+
+The contents of this package includes several scripts for:
+
+									  COMPLEXITY TO USE
+------------------------------------------------------------------------------------------------
+
+	1) Assembly and Annotation of genomic fasta sequences                                         
+		Annotation_Pipeline.py						HIGH			
+	2) Homology Modeling of protein fasta sequences
+		Homology_Modeling.py						LOW			
+		Model_Retrieval.py						LOW			
+		Model_Workspace_Cleanup.py					LOW
+	3) Pathway Mapping of protein fasta sequences
+		Pathway_Mapping.py						MEDIUM
+	4) ncRNA Prediction of genomic fasta sequences
+		ncRNA_Prediction.py						LOW
+	5) Promoter Prediction of genomic fasta sequences
+		Promoter_Prediction.py						LOW
+	6) Miscellaneous
+		gff3_merge.py							LOW
+		blast_xml_to_gff3.py						LOW
+		statgps_functions.py						N/A
+		statgps_pipeline_variables.py					N/A
+		contig-stats.pl							N/A
+
+#------------------------------------------------------
+#-----------------------BEFORE USING-------------------
+#------------------------------------------------------
+
+Please read the section below on installation.  You will also need to manually generate and modify the MAKER configuration files 
+needed for each run before executing this pipeline.
+
+
+-------------------------------------------------------
+------------INSTALLATION INSTRUCTIONS------------------
+-------------------------------------------------------
+
+In order to use these scripts properly, it is suggested unpacking these into
+the /home directory or other easily accessible directory.  The scripts should be ready
+to use once configured properly with the following programs, but you may need to make the 
+scripts executable with chmod +x.
+
+You will also need the following programs properly configured on your system:
+
+1) Velvet Assembler w/ VelvetOptimiser.pl (velveth and velvetg executables should be in the same directory as VelvetOptimiser.pl)
+2) MAKER and all of its included scripts like maker_functional_gff, gff3_merge, and ipr_update_gff (needed for annotating the maker file with new information)
+3) Interproscan (PANTHER libraries are suggested)
+4) BLAST+ from NCBI
+5) KOBAS2.0 (can be downloaded here http://kobas.cbi.pku.edu.cn/download.do)
+6) tRNAscan-SE (can be downloaded here http://lowelab.ucsc.edu/tRNAscan-SE/)
+7) PORTRAIT (can be downloaded here http://bioinformatics.cenargen.embrapa.br/portrait/download/)
+5) SwissProt and TrEMBL fasta files from http://www.uniprot.org/downloads
+****You will need to format these fasta files with the makeblastdb or formatdb command with base name as "trembl" and "swissprot".  
+It is suggested that you make one directory holding all the database files for swissprot and trembl (database fasta files as well).*****
+6) contig-stats.pl - this script is provided with this distribution. You will just need to add its location to the statgps_pipeline_variables.py script.
+7) wkhtmltopdf - can be installed via Ubuntu's apt-get or here: http://code.google.com/p/wkhtmltopdf/
+8) pdftotext - can be installed via Ubuntu's apt-get or here: http://www.foolabs.com/xpdf/download.html - part of the XPDF package.
+9) Perl
+10) Python and the following modules:
+	optparse
+	mechanize
+	html2text (https://pypi.python.org/pypi/html2text)
+11) Any other dependencies of the above programs (Augustus, RepeatMasker(optional), SNAP, etc.)
+
+
+To get the scripts up and running, you must modify the statgps_pipeline_variables script
+with the absolute paths of each program directory as well as executable names (in some cases).
+The script has been written to access the executables by assuming they are in these directories.  
+You may have to run 'sudo' with the script in order to enable permissions as root.
+
+If a program is not included in the statgps_pipeline_variables script, it is assumed to be in your path (e.g. all the python modules should be in PYTHONPATH)  
+
+You will also need to manually generate and modify the MAKER configuration files 
+needed for each run before executing this pipeline.
+
+
+NOTES:
+
+If VelvetOptimiser.pl is not running properly, try placing symbolic links to the velvetg and velveth executables in the same directory as VelvetOptimiser.pl.
+
+The trickiest part of this installation is MAKER.  You will need to run the MAKER -ctl command to generate the control files before using this pipeline.
+These files must be modified to suit your specific inputs.
